@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Kantor extends Model
+{
+    protected $table = 'kantor';
+
+    protected $fillable = [
+        'nama_perusahaan',
+        'alamat',
+        'email',
+        'nomor_telepon',
+        'nomor_handphone',
+        'latitude',
+        'longitude',
+        'tagline',
+        'logo',
+        'favicon',
+        'logo_invert',
+    ];
+}
