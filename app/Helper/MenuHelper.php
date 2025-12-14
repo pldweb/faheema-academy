@@ -63,15 +63,10 @@ class MenuHelper
             ],
             // 2. MENU DENGAN SUB-MENU & BADGE
             [
-                'type' => 'dropdown',
+                'type' => 'link',
                 'label' => 'Dashboard',
                 'icon' => 'bx-home-alt',
                 'key' => 't-dashboard',
-                'badge' => ['text' => '2', 'class' => 'bg-primary'],
-                'children' => [
-                    ['label' => 'Ecommerce', 'route' => 'dashboard.ecommerce', 'key' => 't-ecommerce'],
-                    ['label' => 'Sales', 'route' => 'dashboard.sales', 'key' => 't-sales'],
-                ]
             ],
 
             // 3. SECTION TITLE BARU
