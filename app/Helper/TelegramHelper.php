@@ -17,7 +17,7 @@ class TelegramHelper
             'chat_id' => env('TELEGRAM_CHAT_ID'),
             'text' => $msg,
             'parse_mode' => $parseMode,
-            'message_thread_id' => 4,
+            'message_thread_id' => 815,
         ]);
         Log::info('Proses Telegram Notif');
     }

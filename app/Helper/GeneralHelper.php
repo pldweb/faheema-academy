@@ -142,3 +142,15 @@ if (!function_exists('favicon_url')){
         return 'https://ui-avatars.com/api/?name=FaheemaAcademy&background=random';
     }
 }
+
+if (!function_exists('nama_perusahaan')){
+    function nama_perusahaan()
+    {
+        $kantor = Kantor::query()->first();
+//        if (!is_null($kantor->nama_perusahaan)) {
+//            return $kantor->nama_perusahaan;
+//        }
+
+        return 'Company';
+    }
+}
