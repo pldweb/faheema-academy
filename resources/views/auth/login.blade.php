@@ -23,6 +23,7 @@
                                     <h5>Selamat Datang !</h5>
                                     <p class="text-muted">Login Website Faheema Academy.</p>
                                 </div>
+                                <div id="message"></div>
                                 <div class="p-2 mt-4">
                                     <form id="form-login" onsubmit="return false;">
                                         <div class="mb-3">

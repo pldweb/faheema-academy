@@ -25,6 +25,13 @@
                                 <div class="p-2 mt-4">
                                     <form id="form-login" onsubmit="return false;">
                                         <div class="mb-3">
+                                            <label class="form-label" for="nama">Nama</label>
+                                            <div class="position-relative input-custom-icon">
+                                                <input type="text" class="form-control" name="nama" id="nama" placeholder="Tulis nama">
+                                                <span class="bx bx-user"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
                                             <label class="form-label" for="email">Email</label>
                                             <div class="position-relative input-custom-icon">
                                                 <input type="email" class="form-control" name="email" id="email" placeholder="Tulis email">

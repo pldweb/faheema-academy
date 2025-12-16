@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helper\TelegramHelper;
 use App\Http\Controllers\Controller;
 //use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -18,9 +19,10 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $redirectURL = url('/dashboard');
 
+            TelegramHelper::sendNotification("$email berhasil login");
             return successAlert('Berhasil Login', null, '', $redirectURL);
         }
 
-        return "<div class='alert alert-danger'>Email atau Password Anda tidak sesuai</div>";
+        return errorAlert('Email atau password salah');
     }
 }

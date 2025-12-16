@@ -68,12 +68,14 @@ if (! function_exists('successAlert')) {
 if (! function_exists('errorAlert')) {
     function errorAlert($msg = null)
     {
-
-        return "<div class='alert alert-danger'>$msg</div>
+        return "<div class='alert alert-danger alt'>$msg</div>
                 <script>
                 setTimeout(function () {
-                    hideModal()
-                }, 1500)
+                    $('.alt').fadeOut(500, function () {
+                        $(this).remove();
+                        hideModal();
+                    });
+                }, 1500);
                 </script>";
     }
 }
