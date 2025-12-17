@@ -40,8 +40,8 @@ class AppServiceProvider extends ServiceProvider
         // Fallback jika route tidak ditemukan
         Route::fallback(function () {
             // Pastikan view ini ada, atau ganti jadi abort(404)
-            if (view()->exists('pages.error.404')) {
-                return response()->view('pages.error.404', [], 404);
+            if (view()->exists('pages.404')) {
+                return response()->view('pages.404', [], 404);
             }
             abort(404);
         });

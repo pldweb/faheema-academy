@@ -14,6 +14,7 @@ class SendVerificationUserRegister extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $verifyUrl;
+
     public $user;
 
     public function __construct($verifyUrl, $user)

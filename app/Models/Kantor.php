@@ -21,4 +21,9 @@ class Kantor extends Model
         'favicon',
         'logo_invert',
     ];
+
+    public function wilayah()
+    {
+        return $this->belongsTo(Kelurahan::class, 'kelurahan_kode', 'kode');
+    }
 }

@@ -73,7 +73,6 @@ if (! function_exists('errorAlert')) {
                 setTimeout(function () {
                     $('.alt').fadeOut(500, function () {
                         $(this).remove();
-                        hideModal();
                     });
                 }, 1500);
                 </script>";
@@ -131,11 +130,11 @@ if (! function_exists('img_url')) {
     }
 }
 
-if (!function_exists('favicon_url')){
+if (! function_exists('favicon_url')) {
     function favicon_url()
     {
         $kantor = Kantor::query()->first();
-        if (!is_null($kantor)) {
+        if ($kantor && !empty($kantor->favicon)) {
             if (Storage::disk('r2')->exists($kantor->favicon)) {
                 return Storage::disk('r2')->url($kantor->favicon);
             }
@@ -145,13 +144,13 @@ if (!function_exists('favicon_url')){
     }
 }
 
-if (!function_exists('nama_perusahaan')){
+if (! function_exists('nama_perusahaan')) {
     function nama_perusahaan()
     {
         $kantor = Kantor::query()->first();
-//        if (!is_null($kantor->nama_perusahaan)) {
-//            return $kantor->nama_perusahaan;
-//        }
+        //        if (!is_null($kantor->nama_perusahaan)) {
+        //            return $kantor->nama_perusahaan;
+        //        }
 
         return 'Company';
     }

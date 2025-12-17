@@ -1,4 +1,4 @@
-@php use Illuminate\Support\Facades\Route; @endphp
+@php use Illuminate\Support\Facades\Request; @endphp
 <div class="vertical-menu">
 
     <!-- LOGO -->
@@ -27,93 +27,56 @@
     </button>
 
     <div data-simplebar class="sidebar-menu-scroll">
-        @php
-            $menus = \App\Helper\MenuHelper::sidebar();
-            // Fungsi kecil untuk cek active state (Biar kodingan bersih)
-            function isActive($route = null) {
-                if ($route && \Illuminate\Support\Facades\Route::has($route)) {
-                    return request()->routeIs($route) ? 'mm-active' : ''; // Class active bawaan template
-                }
-                return '';
-            }
-
-            // Fungsi cek jika child ada yang active (untuk parent)
-            function isParentActive($children) {
-                foreach ($children as $child) {
-                    if (isset($child['route']) && isActive($child['route'])) return 'mm-active';
-                    if (isset($child['children'])) {
-                        if (isParentActive($child['children'])) return 'mm-active';
-                    }
-                }
-                return '';
-            }
-        @endphp
-
+        <!--- Sidemenu -->
         <div id="sidebar-menu">
             <ul class="metismenu list-unstyled" id="side-menu">
-                @foreach($menus as $menu)
-                    {{-- CASE 1: JUDUL (TITLE) --}}
-                    @if(isset($menu['type']) && $menu['type'] === 'title')
-                        <li class="menu-title" data-key="{{ $menu['key'] ?? '' }}">{{ $menu['label'] }}</li>
-                        @continue
-                    @endif
 
-                    {{-- Setup Variabel Umum --}}
-                    @php
-                        $hasChildren = isset($menu['children']) && count($menu['children']) > 0;
-                        $url = isset($menu['route']) && Route::has($menu['route']) ? route($menu['route']) : ($menu['url'] ?? 'javascript: void(0);');
-                        $activeClass = $hasChildren ? isParentActive($menu['children']) : (isset($menu['route']) ? isActive($menu['route']) : '');
-                    @endphp
+                @foreach(\App\Helper\MenuHelper::sidebar() as $menu)
 
-                    <li class="{{ $activeClass }}">
-                        <a href="{{ $url }}" class="{{ $hasChildren ? 'has-arrow' : '' }}" aria-expanded="{{ $activeClass ? 'true' : 'false' }}">
-                            <i class="bx {{ $menu['icon'] }} icon nav-icon"></i>
-                            <span class="menu-item" data-key="{{ $menu['key'] ?? '' }}">{{ $menu['label'] }}</span>
+                    {{-- 1. HEADER --}}
+                    @if($menu['type'] == 'header')
+                        <li class="menu-title" data-key="t-menu">{{ $menu['label'] }}</li>
 
-                            {{-- Badge Logic --}}
-                            @if(isset($menu['badge']))
-                                <span class="badge rounded-pill {{ $menu['badge']['class'] }}" data-key="{{ $menu['key'] ?? '' }}">
-                            {{ $menu['badge']['text'] }}
-                        </span>
-                            @endif
-                        </a>
+                        {{-- 2. LINK BIASA --}}
+                    @elseif($menu['type'] == 'link')
+                        {{-- Cek Aktif --}}
+                        <li class="{{ Request::is($menu['active_check']) ? 'mm-active' : '' }}">
+                            <a href="{{ $menu['url'] }}">
+                                <i class="{{ $menu['icon'] }} icon nav-icon"></i>
+                                <span class="menu-item">{{ $menu['label'] }}</span>
+                            </a>
+                        </li>
 
-                        {{-- CASE 2: PUNYA ANAK (DROPDOWN) --}}
-                        @if($hasChildren)
-                            <ul class="sub-menu" aria-expanded="{{ $activeClass ? 'true' : 'false' }}">
-                                @foreach($menu['children'] as $child)
-                                    @php
-                                        $hasGrandChildren = isset($child['children']) && count($child['children']) > 0;
-                                        $childUrl = isset($child['route']) && Route::has($child['route']) ? route($child['route']) : ($child['url'] ?? 'javascript: void(0);');
-                                        $childActive = $hasGrandChildren ? isParentActive($child['children']) : (isset($child['route']) ? isActive($child['route']) : '');
-                                    @endphp
+                        {{-- 3. DROPDOWN --}}
+                    @elseif($menu['type'] == 'dropdown')
+                        {{-- Cek apakah salah satu anak aktif --}}
+                        @php
+                            $isActive = false;
+                            foreach ($menu['active_check'] as $pattern) {
+                                if (Request::is($pattern)) { $isActive = true; break; }
+                            }
+                        @endphp
 
-                                    <li class="{{ $childActive }}">
-                                        <a href="{{ $childUrl }}" class="{{ $hasGrandChildren ? 'has-arrow' : '' }}" data-key="{{ $child['key'] ?? '' }}" aria-expanded="{{ $childActive ? 'true' : 'false' }}">
-                                            {{ $child['label'] }}
+                        <li class="{{ $isActive ? 'mm-active' : '' }}">
+                            <a href="javascript: void(0);" class="has-arrow">
+                                <i class="{{ $menu['icon'] }} icon nav-icon"></i>
+                                <span class="menu-item">{{ $menu['label'] }}</span>
+                            </a>
+
+                            <ul class="sub-menu {{ $isActive ? 'mm-show' : '' }}" aria-expanded="false">
+                                @foreach($menu['items'] as $subItem)
+                                    <li class="{{ Request::is($subItem['active_check']) ? 'mm-active' : '' }}">
+                                        <a href="{{ $subItem['url'] }}"
+                                           class="{{ Request::is($subItem['active_check']) ? 'active' : '' }}">
+                                            {{ $subItem['label'] }}
                                         </a>
-
-                                        {{-- CASE 3: PUNYA CUCU (MULTI LEVEL) --}}
-                                        @if($hasGrandChildren)
-                                            <ul class="sub-menu" aria-expanded="{{ $childActive ? 'true' : 'false' }}">
-                                                @foreach($child['children'] as $grandChild)
-                                                    <li>
-                                                        <a href="{{ isset($grandChild['route']) ? route($grandChild['route']) : ($grandChild['url'] ?? '#') }}"
-                                                           data-key="{{ $grandChild['key'] ?? '' }}">
-                                                            {{ $grandChild['label'] }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
                                     </li>
                                 @endforeach
                             </ul>
-                        @endif
-                    </li>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -14,6 +13,7 @@ class HomeController extends Controller
         }
 
         $params = ['title' => nama_perusahaan()];
+
         return view('auth.login', $params);
     }
 
@@ -24,12 +24,14 @@ class HomeController extends Controller
         }
 
         $params = ['title' => nama_perusahaan()];
+
         return view('auth.login', $params);
     }
 
     public function getRegister()
     {
         $params = ['title' => nama_perusahaan()];
+
         return view('auth.register', $params);
     }
 }

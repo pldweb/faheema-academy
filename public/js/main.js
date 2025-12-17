@@ -154,6 +154,40 @@ function hideModal() {
     $('#universalModal').find('form').trigger('reset');
 }
 
-function insertPeminjamanBuku() {
+// Copy fungsi ini ke file JS kamu
+function initAjaxChoices(selectorID, url) {
+    var element = document.getElementById(selectorID);
+    if (!element) return;
 
+    var choice = new Choices(element, {
+        searchEnabled: true,
+        searchChoices: false, // Search via Server (Ajax)
+        placeholder: true,
+        placeholderValue: 'Ketik Kelurahan / Kecamatan / Kode Pos...',
+        noResultsText: 'Lokasi tidak ditemukan',
+        itemSelectText: 'Tekan untuk memilih',
+        loadingText: 'Sedang memuat...',
+    });
+
+    // Event Listener saat user mengetik
+    element.addEventListener('search', function(event) {
+        var query = event.detail.value;
+
+        // Minimal 3 huruf baru cari
+        if (query.length < 3) return;
+
+        // Panggil Ajax (Pakai jQuery style kamu)
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: { term: query },
+            dataType: 'json',
+            success: function(data) {
+                choice.setChoices(data, 'value', 'label', true);
+            },
+            error: function(xhr) {
+                console.error('Error:', xhr);
+            }
+        });
+    });
 }

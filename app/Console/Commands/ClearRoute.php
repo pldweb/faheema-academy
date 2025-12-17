@@ -35,8 +35,8 @@ class ClearRoute extends Command
         Artisan::call('cache:clear');
         $this->info('✔ Application data cache cleared');
 
-//        Artisan::call('app:sync-permissions');
-//        $this->info('✔ Permissions synced');
+        //        Artisan::call('app:sync-permissions');
+        //        $this->info('✔ Permissions synced');
 
         Artisan::call('optimize');
         $this->info('✔ Optimization files generated (Config & Routes)');

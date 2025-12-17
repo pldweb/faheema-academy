@@ -14,22 +14,18 @@ use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
     public function postRegisterAction(Request $request)
     {
+
         $existingUser = null;
-        if (!empty($request->email)) {
+        if (! empty($request->email)) {
             $existingUser = User::where('email', $request->email)->first();
             if ($existingUser && $existingUser->email_verified_at) {
                 return errorAlert('Email sudah terdaftar dan terverifikasi');
             }
         }
 
-        if (!empty($request->no_telp)) {
+        if (! empty($request->no_telp)) {
             $formatted = WhatsAppHelper::formatNomorHp($request->no_telp);
 
             $query = User::where('no_telp', $formatted);
@@ -43,10 +39,9 @@ class RegisterController extends Controller
             }
         }
 
-
         DB::beginTransaction();
         try {
-            $user = $existingUser ?? new User();
+            $user = $existingUser ?? new User;
 
             $user->nama = $request->nama;
             $user->email = $request->email;
@@ -60,7 +55,7 @@ class RegisterController extends Controller
 
             $role = Role::firstOrCreate([
                 'name' => 'anggota',
-                'guard_name' => 'web'
+                'guard_name' => 'web',
             ]);
 
             $user->assignRole($role);
@@ -77,9 +72,11 @@ class RegisterController extends Controller
                 return successAlert('Daftar akun berhasil. Silakan cek email untuk verifikasi akun sebelum login.', null, '', $redirectURL);
             }
 
-            $existingUser->update(['email_verified_at' => now()]);
+            $user->email_verified_at = now();
+            $user->save();
+            DB::commit();
 
-            return successAlert('Daftar akun berhasil. Silakan login.');
+            return successAlert('Daftar akun berhasil. Silakan login.', null, '', url('/login'));
 
         } catch (\Exception $e) {
             DB::rollback();

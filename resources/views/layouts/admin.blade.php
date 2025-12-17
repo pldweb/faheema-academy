@@ -2,24 +2,19 @@
 <html lang="id">
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard | Faheema Academy</title>
+    <title> @yield('title') | Faheema Academy</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
     <meta name="Author" content="Muhammad Rivaldi Fanani">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- App favicon -->
     <link rel="shortcut icon" href="{{favicon_url()}}">
-
-    <!-- plugin css -->
     <link href="{{asset('libs/jsvectormap/css/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
-
-    <!-- Bootstrap Css -->
+    <link href="{{asset('libs/choices.js/public/assets/styles/choices.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{asset('libs/flatpickr/flatpickr.min.css')}}">
     <link href="{{asset('css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
     <link href="{{asset('css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
     <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
     <script src="{{asset('js/jquery-3.7.1.min.js')}}"></script>
@@ -27,7 +22,6 @@
 
 </head>
 <body>
-
 
 <div id="layout-wrapper">
     @include('components.top-navbar')
@@ -43,29 +37,36 @@
     </div>
 </div>
 
-{{--@include('components.right-bar')--}}
+<div class="modal fade" id="universalModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="px-2 py-2">
+                <div id="message-modal"></div>
+            </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Loading...</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="text-center p-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-{{--<!-- chat offcanvas -->--}}
-{{--<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivity" aria-labelledby="offcanvasActivityLabel">--}}
-{{--    <div class="offcanvas-header border-bottom">--}}
-{{--        <h5 id="offcanvasActivityLabel">Offcanvas right</h5>--}}
-{{--        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>--}}
-{{--    </div>--}}
-{{--    <div class="offcanvas-body">--}}
-{{--        ...--}}
-{{--    </div>--}}
-{{--</div>--}}
-
-<!-- JAVASCRIPT -->
 <script src="{{asset('libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('libs/metismenujs/metismenujs.min.js')}}"></script>
 <script src="{{asset('libs/simplebar/simplebar.min.js')}}"></script>
 <script src="{{asset('libs/eva-icons/eva.min.js')}}"></script>
 
-<!-- apexcharts -->
-<script src="{{asset('libs/apexcharts/apexcharts.min.js')}}"></script>
+<script src="{{asset('libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+<script src="{{asset('libs/flatpickr/flatpickr.min.js')}}"></script>
 
-<!-- Vector map-->
+<script src="{{asset('js/pages/form-advanced.init.js')}}"></script>
+
 <script src="{{asset('libs/jsvectormap/js/jsvectormap.min.js')}}"></script>
 <script src="{{asset('libs/jsvectormap/maps/world-merc.js')}}"></script>
 <script src="{{asset('js/pages/dashboard.init.js')}}"></script>

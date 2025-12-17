@@ -22,8 +22,9 @@
                                     <h5>Selamat Datang !</h5>
                                     <p class="text-muted">Daftar akun Faheema Academy.</p>
                                 </div>
+                                <div id="message"></div>
                                 <div class="p-2 mt-4">
-                                    <form id="form-login" onsubmit="return false;">
+                                    <form id="form-register" onsubmit="return false;">
                                         <div class="mb-3">
                                             <label class="form-label" for="nama">Nama</label>
                                             <div class="position-relative input-custom-icon">
@@ -41,7 +42,7 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="email">Nomor Handphone</label>
                                             <div class="position-relative input-custom-icon">
-                                                <input type="tel" class="form-control" name="no_telp" id="no_telp" placeholder="Tulis nomor handphone">
+                                                <input type="tel" class="form-control" pattern="[0-9]*" inputmode="numeric" maxlength="14" name="no_telp" id="no_telp" placeholder="Tulis nomor handphone">
                                                 <span class="bx bx-phone"></span>
                                             </div>
                                         </div>
@@ -52,7 +53,7 @@
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup input-custom-icon">
                                                 <span class="bx bx-lock-alt"></span>
-                                                <input type="password" class="form-control" id="password-input" placeholder="Tulis password">
+                                                <input type="password" class="form-control" name="password" id="password-input" placeholder="Tulis password">
                                                 <button type="button" class="btn btn-link position-absolute h-100 end-0 top-0" id="password-addon">
                                                     <i class="mdi mdi-eye-outline font-size-18 text-muted"></i>
                                                 </button>
@@ -91,13 +92,27 @@
             })
         })
 
-        $(function () {
-            $("#no_telp").on("keypress", function (e) {
-                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                    return false;
-                }
-            });
+        $("#password-addon").on('click', function () {
+            let input = $("#password-input");
+            let type = input.attr('type');
+            const icon = $(this).find('i');
+
+
+            if(type == 'password'){
+                input.attr('type', 'text');
+                icon.removeClass('mdi-eye-outline').addClass('mdi-eye-off');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('mdi-eye-off').addClass('mdi-eye-outline');
+            }
+        })
+
+        $("#no_telp").on("keypress", function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
         });
+
     </script>
 
 @endsection

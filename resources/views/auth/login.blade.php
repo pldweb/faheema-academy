@@ -41,7 +41,7 @@
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup input-custom-icon">
                                                 <span class="bx bx-lock-alt"></span>
-                                                <input type="password" class="form-control" id="password-input" placeholder="Enter password">
+                                                <input type="password" name="password" class="form-control" id="password-input" placeholder="Enter password">
                                                 <button type="button" class="btn btn-link position-absolute h-100 end-0 top-0" id="password-addon">
                                                     <i class="mdi mdi-eye-outline font-size-18 text-muted"></i>
                                                 </button>
@@ -80,6 +80,21 @@
                 console.log(dataInput);
                 ajxProcess('/auth/login/login-action', dataInput, '#message')
             })
+        })
+
+        $("#password-addon").on('click', function () {
+            let input = $("#password-input");
+            let type = input.attr('type');
+            const icon = $(this).find('i');
+
+
+            if(type == 'password'){
+                input.attr('type', 'text');
+                icon.removeClass('mdi-eye-outline').addClass('mdi-eye-off');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('mdi-eye-off').addClass('mdi-eye-outline');
+            }
         })
     </script>
 

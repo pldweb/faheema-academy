@@ -15,39 +15,9 @@ class MenuHelper
             ],
             [
                 'type' => 'link',
-                'label' => 'Messages',
-                'url' => '#',
-                'icon' => 'mdi-message-text-outline',
-            ],
-            [
-                'type' => 'link',
-                'label' => 'Help',
-                'url' => '#',
-                'icon' => 'mdi-lifebuoy',
-            ],
-            [
-                'type' => 'link',
                 'label' => 'Settings',
                 'url' => '#',
                 'icon' => 'mdi-cog-outline',
-                'badge' => [ // Support badge dinamis
-                    'text' => 'New',
-                    'class' => 'bg-success-subtle text-success'
-                ]
-            ],
-            [
-                'type' => 'link',
-                'label' => 'Lock screen',
-                'url' => '#', // route('lock-screen')
-                'icon' => 'mdi-lock',
-            ],
-            [
-                'type' => 'divider', // Pemisah
-            ],
-            [
-                'type' => 'logout',
-                'label' => 'Logout',
-                'icon' => 'mdi-logout',
             ],
         ];
     }
@@ -55,61 +25,45 @@ class MenuHelper
     public static function sidebar()
     {
         return [
-            // 1. SECTION TITLE
             [
-                'type' => 'title',
+                'type' => 'header',
                 'label' => 'Dashboard',
-                'key' => 't-menu',
             ],
-            // 2. MENU DENGAN SUB-MENU & BADGE
             [
                 'type' => 'link',
                 'label' => 'Dashboard',
-                'icon' => 'bx-home-alt',
-                'key' => 't-dashboard',
+                'url' => url('dashboard'),
+                'icon' => 'bx bx-home-alt',
+                'active_check' => 'dashboard*', // Pola URL buat cek aktif
             ],
-
-            // 3. SECTION TITLE BARU
             [
-                'type' => 'title',
-                'label' => 'Applications',
-                'key' => 't-applications',
-            ],
-
-            // 4. MENU TUNGGAL (SINGLE LINK)
-            [
-                'type' => 'link',
-                'label' => 'Calendar',
-                'icon' => 'bx-calendar-event',
-                'route' => 'calendar.index',
-                'key' => 't-calendar',
+                'type' => 'header',
+                'label' => 'Administration',
             ],
             [
                 'type' => 'link',
-                'label' => 'Chat',
-                'icon' => 'bx-chat',
-                'route' => 'chat.index',
-                'key' => 't-chat',
-                'badge' => ['text' => 'Hot', 'class' => 'bg-danger'],
+                'label' => 'Data Kantor',
+                'url' => url('admin/kantor'),
+                'icon' => 'bx bx-building',
+                'active_check' => 'kantor*',
             ],
-
-            // 5. MENU MULTI LEVEL (CONTOH LEVEL 3)
             [
-                'type' => 'dropdown',
-                'label' => 'Multi Level',
-                'icon' => 'bx-share-alt',
-                'key' => 't-multi-level',
-                'children' => [
-                    ['label' => 'Level 1.1', 'url' => '#', 'key' => 't-level-1-1'],
+                'type' => 'dropdown', // Tipe Dropdown
+                'label' => 'Email',
+                'icon' => 'bx bx-envelope',
+                'active_check' => ['setting*', 'info*'], // Array pola URL
+                'items' => [
                     [
-                        'label' => 'Level 1.2',
-                        'key' => 't-level-1-2',
-                        'children' => [ // Anak cucu
-                            ['label' => 'Level 2.1', 'url' => '#', 'key' => 't-level-2-1'],
-                            ['label' => 'Level 2.2', 'url' => '#', 'key' => 't-level-2-2'],
-                        ]
+                        'label' => 'Setting',
+                        'url' => url('setting'),
+                        'active_check' => 'setting*',
                     ],
-                ]
+                    [
+                        'label' => 'Info',
+                        'url' => url('info'),
+                        'active_check' => 'info*',
+                    ],
+                ],
             ],
         ];
     }
