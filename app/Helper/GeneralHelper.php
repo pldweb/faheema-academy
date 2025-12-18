@@ -134,7 +134,7 @@ if (! function_exists('favicon_url')) {
     function favicon_url()
     {
         $kantor = Kantor::query()->first();
-        if ($kantor && !empty($kantor->favicon)) {
+        if ($kantor && ! empty($kantor->favicon)) {
             if (Storage::disk('r2')->exists($kantor->favicon)) {
                 return Storage::disk('r2')->url($kantor->favicon);
             }
@@ -148,7 +148,7 @@ if (! function_exists('logo_utama_url')) {
     function logo_utama_url()
     {
         $kantor = Kantor::query()->first();
-        if ($kantor && !empty($kantor->logo)) {
+        if ($kantor && ! empty($kantor->logo)) {
             if (Storage::disk('r2')->exists($kantor->logo)) {
                 return Storage::disk('r2')->url($kantor->logo);
             }

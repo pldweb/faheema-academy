@@ -48,8 +48,6 @@ class BackupDatabaseToTelegram extends Command
             'message_thread_id' => 815,
         ]);
 
-
-
         if ($response->successful()) {
             $this->info('Sukses mengirim ke Telegram!');
 

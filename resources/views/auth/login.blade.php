@@ -36,7 +36,7 @@
 
                                         <div class="mb-3">
                                             <div class="float-end">
-                                                <a href="{{url('reset-password')}}" class="text-muted text-decoration-underline">Lupa password?</a>
+                                                <a href="{{url('forgot-password')}}" class="text-muted text-decoration-underline">Lupa password?</a>
                                             </div>
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup input-custom-icon">

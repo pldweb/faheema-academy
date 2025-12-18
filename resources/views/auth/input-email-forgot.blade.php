@@ -22,17 +22,16 @@
                                             <i class="bx bxs-envelope h2 mb-0 text-primary"></i>
                                         </div>
                                     </div>
-
                                     <div class="mt-4 pt-1">
                                         <h4>Verifikasi Email Kamu</h4>
-                                        <p>Kami telah mengirimkan link verifikasi ke email <span class="fw-bold">{{$user->email ?? ''}}</span>, Tolong cek segera</p>
+                                        <p>Tulis email kamu untuk dikirimkan link reset password dengan waktu terbatas</p>
+                                        <input type="email" class="form-control" id="email" name="email" required>
                                         <div class="mt-4">
-                                            <a target="_blank" href="https://mail.google.com" class="btn btn-danger w-100">Cek Gmail</a>
+                                            <a href="#" id="resend" class="btn btn-primary w-100">Kirim Email</a>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="email" name="email" value="{{ $user->email }}">
                                     <div class="mt-4 text-center">
-                                        <p class="mb-0">Tidak terima email? <a href="#" id="resend" class="text-primary fw-semibold"> Kirim Lagi </a> </p>
+{{--                                        <p class="mb-0">Tidak terima email? <a href="#" id="resend" class="text-primary fw-semibold"> Kirim Lagi </a> </p>--}}
                                     </div>
                                 </div>
                             </div>
@@ -47,8 +46,8 @@
             $("#resend").click(function (e) {
                 e.preventDefault();
                 let email = $("#email").val();
-               confirmModal('Kirim lagi?', function () {
-                   ajxProcess("/auth/verification/resend", {email: email}, "#message-modal", null)
+               confirmModal('Kirim Link Reset Password', function () {
+                   ajxProcess("/auth/forgot-password/send-email", {email: email}, "#message-modal", null)
                })
             })
         })

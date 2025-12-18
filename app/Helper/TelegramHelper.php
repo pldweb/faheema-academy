@@ -12,11 +12,11 @@ class TelegramHelper
     {
         $msg .= "\n";
         $msg .= 'Dilakukan Oleh: '.'*'.User::panggilNamaUser()."*\n";
-        $msg .= 'Dikirim dari '.env('APP_URL');
+        $msg .= 'Dikirim dari '.config('services.telegram.app_url')."*\n";
         Telegram::sendMessage([
-            'chat_id' => env('TELEGRAM_CHAT_ID'),
+            'chat_id' => config('services.telegram.chat_id'),
             'text' => $msg,
-            'parse_mode' => $parseMode,
+            //            'parse_mode' => $parseMode,
             'message_thread_id' => 815,
         ]);
         Log::info('Proses Telegram Notif');

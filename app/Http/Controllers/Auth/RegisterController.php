@@ -18,14 +18,14 @@ class RegisterController extends Controller
     {
 
         $existingUser = null;
-        if (!empty($request->email)) {
+        if (! empty($request->email)) {
             $existingUser = User::where('email', $request->email)->first();
             if ($existingUser && $existingUser->email_verified_at) {
                 return errorAlert('Email sudah terdaftar dan terverifikasi');
             }
         }
 
-        if (!empty($request->no_telp)) {
+        if (! empty($request->no_telp)) {
             $formatted = WhatsAppHelper::formatNomorHp($request->no_telp);
 
             $query = User::where('no_telp', $formatted);
@@ -60,7 +60,7 @@ class RegisterController extends Controller
 
             $user->assignRole($role);
 
-            if (env('IS_PRODUCTION') == 1) {
+            if (config('services.project.is_production') == 1) {
 
                 dispatch(new \App\Jobs\SendVerificationEmailRegistration($user));
 

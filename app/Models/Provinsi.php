@@ -8,7 +8,9 @@ class Provinsi extends Model
 {
     // Konfigurasi Primary Key String (Wajib!)
     protected $primaryKey = 'kode';
+
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $guarded = [];

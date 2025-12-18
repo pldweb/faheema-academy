@@ -34,4 +34,13 @@ class HomeController extends Controller
 
         return view('auth.register', $params);
     }
+
+    public function getForgotPassword()
+    {
+        $params = [
+            'title' => nama_perusahaan(),
+        ];
+
+        return view('auth.input-email-forgot', $params);
+    }
 }
