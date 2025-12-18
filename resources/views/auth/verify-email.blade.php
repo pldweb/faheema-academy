@@ -30,7 +30,7 @@
                                             <a target="_blank" href="https://mail.google.com" class="btn btn-danger w-100">Cek Gmail</a>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="email" value="{{ $user->email }}">
+                                    <input type="hidden" id="email" name="email" value="{{ $user->email }}">
                                     <div class="mt-4 text-center">
                                         <p class="mb-0">Tidak terima email? <a href="#" id="resend" class="text-primary fw-semibold"> Kirim Lagi </a> </p>
                                     </div>
@@ -47,7 +47,6 @@
             $("#resend").click(function (e) {
                 e.preventDefault();
                 let email = $("#email").val();
-
                confirmModal('Kirim lagi?', function () {
                    ajxProcess("/auth/verification/resend", {email: email}, "#message", null)
                })

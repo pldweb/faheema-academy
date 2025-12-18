@@ -22,6 +22,14 @@ function confirmModal(message, confirmCallback) {
 
 function ajxProcess(url = null, dataInput = null, message = null, func = null) {
 
+    let content_type = 'application/x-www-form-urlencoded; charset=UTF-8';
+    let process_data = true;
+
+    if (dataInput instanceof FormData) {
+        content_type = false; // Wajib false biar browser set boundary file
+        process_data = false; // Wajib false biar data gak diubah jadi string
+    }
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -29,8 +37,8 @@ function ajxProcess(url = null, dataInput = null, message = null, func = null) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         },
-        contentType: false,
-        processData: false,
+        contentType: content_type,
+        processData: process_data,
         success: function(response) {
             $(message).html(response);
         },

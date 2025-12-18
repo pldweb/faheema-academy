@@ -101,7 +101,10 @@ class RegisterController extends Controller
         $user->update(['email_verified_at' => now()]);
 
         if ($user->email_verified_at) {
-            $params = ['title' => 'Verifikasi Email Akun Kamu'];
+            $params = [
+                'title' => 'Verifikasi Email Akun Kamu',
+                'email' => $user->email,
+            ];
 
             return view('auth.verify-success', $params);
         }

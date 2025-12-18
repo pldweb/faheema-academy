@@ -34,11 +34,11 @@ class VerificationController extends Controller
     {
         $email = $request->input('email');
         if (!$email) {
-            return errorAlert('Tidak ditemukan');
+            return errorAlert('Input Email Tidak ditemukan');
         }
         $user = User::where('email', $email)->first();
         if (!$user) {
-            return errorAlert('Tidak ditemukan');
+            return errorAlert('Email tidak ada di database');
         }
         if ($user->email_verified_at) {
             return errorAlert('Email sudah terverifikasi');
