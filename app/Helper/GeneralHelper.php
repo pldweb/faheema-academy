@@ -144,6 +144,20 @@ if (! function_exists('favicon_url')) {
     }
 }
 
+if (! function_exists('logo_utama_url')) {
+    function logo_utama_url()
+    {
+        $kantor = Kantor::query()->first();
+        if ($kantor && !empty($kantor->logo)) {
+            if (Storage::disk('r2')->exists($kantor->logo)) {
+                return Storage::disk('r2')->url($kantor->logo);
+            }
+        }
+
+        return 'https://ui-avatars.com/api/?name=FaheemaAcademy&background=random';
+    }
+}
+
 if (! function_exists('nama_perusahaan')) {
     function nama_perusahaan()
     {

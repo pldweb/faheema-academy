@@ -44,10 +44,11 @@ class BackupDatabaseToTelegram extends Command
             'document', file_get_contents($filePath), $fileName
         )->post("https://api.telegram.org/bot{$botToken}/sendDocument", [
             'chat_id' => $chatId,
-            'caption' => "📦 **Database Backup**: {$dbName}\n📅 **Tanggal**: ".now()->toDateTimeString(),
-            'parse_mode' => 'Markdown',
-            'message_thread_id' => 4,
+            'caption' => "Database Backup: {$dbName}\nTanggal: ".now()->toDateTimeString(),
+            'message_thread_id' => 815,
         ]);
+
+
 
         if ($response->successful()) {
             $this->info('Sukses mengirim ke Telegram!');

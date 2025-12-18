@@ -37,25 +37,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="universalModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="px-2 py-2">
-                <div id="message-modal"></div>
-            </div>
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Loading...</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="text-center p-4">
-                    <div class="spinner-border text-primary" role="status"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('components.modal')
 
 <script src="{{asset('libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('libs/metismenujs/metismenujs.min.js')}}"></script>

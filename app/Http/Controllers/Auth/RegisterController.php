@@ -18,14 +18,14 @@ class RegisterController extends Controller
     {
 
         $existingUser = null;
-        if (! empty($request->email)) {
+        if (!empty($request->email)) {
             $existingUser = User::where('email', $request->email)->first();
             if ($existingUser && $existingUser->email_verified_at) {
                 return errorAlert('Email sudah terdaftar dan terverifikasi');
             }
         }
 
-        if (! empty($request->no_telp)) {
+        if (!empty($request->no_telp)) {
             $formatted = WhatsAppHelper::formatNomorHp($request->no_telp);
 
             $query = User::where('no_telp', $formatted);
@@ -66,7 +66,7 @@ class RegisterController extends Controller
 
                 DB::commit();
 
-                $redirectURL = url('/verifikasi');
+                $redirectURL = url('/auth/verification', $user->id);
                 TelegramHelper::sendNotification("Berhasil kirim email untuk user baru $user->email");
 
                 return successAlert('Daftar akun berhasil. Silakan cek email untuk verifikasi akun sebelum login.', null, '', $redirectURL);
@@ -83,20 +83,6 @@ class RegisterController extends Controller
             Log::error('Error register: '.$e->getMessage());
 
             return errorAlert('Terjadi kesalahan saat mendaftar.');
-        }
-    }
-
-    public function postResendVerification(Request $request)
-    {
-        try {
-
-            $user = User::find($request->id);
-            dispatch(new \App\Jobs\SendVerificationEmailRegistration($user));
-
-            return true;
-
-        } catch (\Exception $e) {
-            return false;
         }
     }
 
