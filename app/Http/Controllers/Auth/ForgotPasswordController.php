@@ -60,7 +60,7 @@ class ForgotPasswordController extends Controller
 
             DB::commit();
 
-            // 4. Handle Telegram (Pakai Backtick ` biar aman dari karakter aneh)
+            // Handle Telegram (Pakai Backtick ` biar aman dari karakter aneh)
             // Contoh output: "Budi Santoso" Berhasil ubah password
             $safeName = "`" . $data->nama . "`";
             TelegramHelper::sendNotification("$safeName Berhasil ubah password");
@@ -68,7 +68,7 @@ class ForgotPasswordController extends Controller
             $redirectUrl = url('login');
             return successAlert('Password berhasil diubah', null, '', $redirectUrl);
 
-        } catch (\Exception $exception) { // Pakai backslash \ biar pake Exception global
+        } catch (\Exception $exception) {
             DB::rollBack();
 
             Log::error("Gagal Ganti Password: " . $exception->getMessage());
@@ -85,7 +85,7 @@ class ForgotPasswordController extends Controller
         }
 
         $data = User::where('email', $email)->first();
-        if (! $data) {
+        if (!$data) {
             return errorAlert('Email tidak ditemukan');
         }
 

@@ -23,15 +23,16 @@
                                         </div>
                                     </div>
                                     <div class="mt-4 pt-1">
-                                        <h4>Verifikasi Email Kamu</h4>
+                                        <h4>Inputkan Email Kamu</h4>
                                         <p>Tulis email kamu untuk dikirimkan link reset password dengan waktu terbatas</p>
-                                        <input type="email" class="form-control" id="email" name="email" required>
-                                        <div class="mt-4">
+                                        <div class="position-relative input-custom-icon">
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                            <span class="bx bx-mail-send"></span>
+                                        </div>
+                                            <div class="mt-4 mb-2">
                                             <a href="#" id="resend" class="btn btn-primary w-100">Kirim Email</a>
                                         </div>
-                                    </div>
-                                    <div class="mt-4 text-center">
-{{--                                        <p class="mb-0">Tidak terima email? <a href="#" id="resend" class="text-primary fw-semibold"> Kirim Lagi </a> </p>--}}
+                                        <a class="btn w-100 btn-secondary" href="{{url()->previous()}}" id="resend">Kembali</a>
                                     </div>
                                 </div>
                             </div>

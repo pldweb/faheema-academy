@@ -59,10 +59,10 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="form-check py-1">
-                                            <input type="checkbox" class="form-check-input" id="auth-remember-check">
-                                            <label class="form-check-label" for="auth-remember-check">Ingat Saya</label>
-                                        </div>
+{{--                                        <div class="form-check py-1">--}}
+{{--                                            <input type="checkbox" class="form-check-input" id="auth-remember-check">--}}
+{{--                                            <label class="form-check-label" for="auth-remember-check">Ingat Saya</label>--}}
+{{--                                        </div>--}}
                                         <div class="mt-3">
                                             <button class="btn btn-primary w-100 waves-effect waves-light"
                                                     type="submit">Daftar Sekarang
@@ -70,7 +70,8 @@
                                         </div>
                                         <div class="mt-4 text-center">
                                             <p class="mb-0">Sudah Punya Akun ?
-                                                <a href="{{url('login')}}" class="fw-medium text-primary"> Yuk Login Sekarang </a></p>
+                                                <a href="{{url('login')}}" class="fw-medium text-primary"> Yuk Login Sekarang </a>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
@@ -87,7 +88,6 @@
         $(document).ready(function () {
             $('#form-register').submit(function () {
                 const formData = new FormData(this);
-                console.log(formData);
                 ajxProcess("/auth/register/register-action", formData, "#message");
             })
         })

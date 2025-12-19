@@ -13,7 +13,6 @@
                                 <img src="{{logo_utama_url()}}" alt="" height="30" class="auth-logo-light me-start">
                             </a>
                         </div>
-
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="p-2 my-2 text-center">
@@ -25,11 +24,7 @@
                                     <div class="mt-4 pt-1">
                                         <h4>Ganti Password Baru Kamu</h4>
                                         <p>Segera ganti password kamu dengan yang baru secepatnya</p>
-
-                                        {{-- TAMBAHAN: Hidden Input buat nyimpen ID User --}}
-                                        {{-- $data dikirim dari Controller getFormPassword --}}
                                         <input type="hidden" id="user-id" value="{{ $data->id }}">
-
                                         <div class="position-relative auth-pass-inputgroup input-custom-icon">
                                             <span class="bx bx-lock-alt"></span>
                                             <input type="password" name="password" class="form-control" id="password-input" placeholder="Enter password">
@@ -54,14 +49,8 @@
             $("#resend").click(function (e) {
                 e.preventDefault();
 
-                // Ambil nilai Password
                 let password = $("#password-input").val();
-                // Ambil nilai ID User
                 let userId = $("#user-id").val();
-
-                // Debugging: Cek di console browser (Klik kanan -> Inspect -> Console)
-                console.log("Password:", password);
-                console.log("User ID:", userId);
 
                 if(!password) {
                     alert("Password tolong diisi dulu ya!");
@@ -69,14 +58,7 @@
                 }
 
                 confirmModal('Kirim lagi?', function () {
-                    // PERBAIKAN PENTING DI SINI:
-                    // Kita kirim object berisi 'password' DAN 'id'
-                    let dataKirim = {
-                        password: password,
-                        id: userId
-                    };
-
-                    ajxProcess("/auth/forgot-password/save", dataKirim, "#message-modal", null)
+                    ajxProcess("/auth/forgot-password/save", {password: password, id: userId}, "#message-modal", null)
                 })
             })
 
