@@ -62,10 +62,9 @@ class RegisterController extends Controller
 
             if (config('services.project.is_production') == 1) {
 
-                dispatch(new \App\Jobs\SendVerificationEmailRegistration($user));
-
                 DB::commit();
 
+                dispatch(new \App\Jobs\SendVerificationEmailRegistration($user));
                 $redirectURL = url('/auth/verification', $user->id);
                 TelegramHelper::sendNotification("Berhasil kirim email untuk user baru $user->email");
 
