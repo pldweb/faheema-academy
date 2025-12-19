@@ -10,10 +10,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Exception;
-
 use Illuminate\Support\Facades\Log;
-use function PHPUnit\Framework\isEmpty;
 
 class ForgotPasswordController extends Controller
 {
@@ -49,7 +46,7 @@ class ForgotPasswordController extends Controller
 
         $data = User::find($idUser);
 
-        if (!$data) {
+        if (! $data) {
             return errorAlert('Data user tidak valid.');
         }
 
@@ -62,18 +59,19 @@ class ForgotPasswordController extends Controller
 
             // Handle Telegram (Pakai Backtick ` biar aman dari karakter aneh)
             // Contoh output: "Budi Santoso" Berhasil ubah password
-            $safeName = "`" . $data->nama . "`";
+            $safeName = '`'.$data->nama.'`';
             TelegramHelper::sendNotification("$safeName Berhasil ubah password");
 
             $redirectUrl = url('login');
+
             return successAlert('Password berhasil diubah', null, '', $redirectUrl);
 
         } catch (\Exception $exception) {
             DB::rollBack();
 
-            Log::error("Gagal Ganti Password: " . $exception->getMessage());
+            Log::error('Gagal Ganti Password: '.$exception->getMessage());
 
-            return errorAlert("Gagal menyimpan: " . $exception->getMessage());
+            return errorAlert('Gagal menyimpan: '.$exception->getMessage());
         }
     }
 
@@ -85,7 +83,7 @@ class ForgotPasswordController extends Controller
         }
 
         $data = User::where('email', $email)->first();
-        if (!$data) {
+        if (! $data) {
             return errorAlert('Email tidak ditemukan');
         }
 

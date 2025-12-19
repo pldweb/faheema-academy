@@ -83,7 +83,6 @@
         </div>
     </div>
 
-
     <script>
         $(document).ready(function () {
             $('#form-register').submit(function () {

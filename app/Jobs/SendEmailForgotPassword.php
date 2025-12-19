@@ -17,6 +17,7 @@ class SendEmailForgotPassword implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $data;
+
     public $url;
 
     public function __construct($data, $url)
@@ -32,7 +33,7 @@ class SendEmailForgotPassword implements ShouldQueue
 
     public function failed(Throwable $exception): void
     {
-        Log::error('JOB GAGAL TOTAL BOSKU: ' . $exception->getMessage());
+        Log::error('JOB GAGAL TOTAL BOSKU: '.$exception->getMessage());
         Log::error($exception->getTraceAsString());
     }
 }
