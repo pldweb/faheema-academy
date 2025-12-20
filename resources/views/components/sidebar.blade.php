@@ -32,37 +32,27 @@
             <ul class="metismenu list-unstyled" id="side-menu">
 
                 @foreach(\App\Helper\MenuHelper::sidebar() as $menu)
-
-                    {{-- 1. HEADER --}}
                     @if($menu['type'] == 'header')
                         <li class="menu-title" data-key="t-menu">{{ $menu['label'] }}</li>
-
-                        {{-- 2. LINK BIASA --}}
                     @elseif($menu['type'] == 'link')
-                        {{-- Cek Aktif --}}
                         <li class="{{ Request::is($menu['active_check']) ? 'mm-active' : '' }}">
                             <a href="{{ $menu['url'] }}">
                                 <i class="{{ $menu['icon'] }} icon nav-icon"></i>
                                 <span class="menu-item">{{ $menu['label'] }}</span>
                             </a>
                         </li>
-
-                        {{-- 3. DROPDOWN --}}
                     @elseif($menu['type'] == 'dropdown')
-                        {{-- Cek apakah salah satu anak aktif --}}
                         @php
                             $isActive = false;
                             foreach ($menu['active_check'] as $pattern) {
                                 if (Request::is($pattern)) { $isActive = true; break; }
                             }
                         @endphp
-
                         <li class="{{ $isActive ? 'mm-active' : '' }}">
                             <a href="javascript: void(0);" class="has-arrow">
                                 <i class="{{ $menu['icon'] }} icon nav-icon"></i>
                                 <span class="menu-item">{{ $menu['label'] }}</span>
                             </a>
-
                             <ul class="sub-menu {{ $isActive ? 'mm-show' : '' }}" aria-expanded="false">
                                 @foreach($menu['items'] as $subItem)
                                     <li class="{{ Request::is($subItem['active_check']) ? 'mm-active' : '' }}">
