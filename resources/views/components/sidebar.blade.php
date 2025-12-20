@@ -17,7 +17,7 @@
                 <img src="{{logo_utama_url()}}" alt="" height="30">
             </span>
             <span class="logo-sm">
-                <img src="{{logo_utama_url()}}" alt="" height="26">
+                <img src="{{favicon_url()}}" alt="" height="26">
             </span>
         </a>
     </div>
