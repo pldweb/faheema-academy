@@ -124,7 +124,7 @@
 
     <script>
         $(document).ready(function() {
-            var urlPencarian = "{{ url('ajax/lokasi/search') }}";
+            var urlPencarian = '/ajax/lokasi/search';
             initAjaxChoices('cari-lokasi', urlPencarian);
 
             $("#form-kantor").submit(function (e){
