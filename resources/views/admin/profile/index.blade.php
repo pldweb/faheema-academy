@@ -34,7 +34,7 @@
                             <div class="p-2">
                                 <form id="form-user" enctype="multipart/form-data" onsubmit="return false;">
                                     <div class="mb-3 row">
-                                        <x-input label="Kode User" type="text" id="disabledTextInput" disabled="true" name="kode_user" value="{{$user->kode_user ?? 'sss'}}"/>
+                                        <x-input label="Kode User" type="text" id="disabledTextInput" disabled="true" name="kode_user" value="{{$user->kode_user ?? ''}}"/>
                                     </div>
                                     <div class="mb-3 row">
                                         <x-input label="Role User" name="role_id" disabled="true" value="{{$user->role_id ?? ''}}"/>
@@ -49,10 +49,36 @@
                                         <x-input-phone label="No Telp" name="no_telp" prefix="+62" value="{{$user->no_telp ?? ''}}" />
                                     </div>
                                     <div class="mb-3 row">
+                                        <label class="form-label">Jenis Kelamin</label>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input jk" name="jenis_kelamin" value="L" type="checkbox" id="formCheck2" {{$user->jenis_kelamin == 'L' ? 'checked' : ''}}>
+                                                    <label class="form-check-label" for="formCheck2">
+                                                        Laki-laki
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input jk" name="jenis_kelamin" value="P" type="checkbox" id="formCheck2" {{$user->jenis_kelamin == 'P' ? 'checked' : ''}}>
+                                                    <label class="form-check-label" for="formCheck2">
+                                                        Perempuan
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="Tanggal Lahir">Tanggal Lahir</label>
+                                        <input class="form-control flatpickr-input flatpickr-mobile" value="{{$user->tanggal_lahir}}" name="tanggal_lahir" tabindex="1" type="date" placeholder="">
+                                    </div>
+                                    <div class="mb-3 row">
                                         <x-input label="Alamat Detail (Jalan, RT/RW, No. Gedung)" name="alamat_detail" value="{{$user->alamat_detail}}" type="text"/>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label">Cari Kelurahan / Kecamatan <span class="text-danger">*</span></label>
+                                        <label class="form-label">Cari Kelurahan / Kecamatan</label>
                                         <select style="padding:0;" class="form-control" name="kode_lokasi" id="cari-lokasi">
                                             @if($user->wilayah)
                                                 <option value="{{ $user->kelurahan_kode }}" selected>
@@ -63,10 +89,28 @@
                                             @endif
                                         </select>
                                     </div>
+                                    <input type="hidden" value="{{$user->id}}" name="id">
                                     <div class="mb-3 row">
                                         <button type="submit" class="btn btn-primary">Simpan Profile</button>
                                     </div>
                                 </form>
+                                <script>
+                                    $(document).ready(function() {
+                                        $("#form-user").submit(function(e) {
+                                            e.preventDefault();
+                                            let data = new FormData(this);
+                                            confirmModal('Apakah data user sudah benar?', function() {
+                                                ajxProcess('/admin/profile/simpan-profile', data, "#message-modal")
+                                            })
+                                        })
+
+                                        $("#no_telp").on("keypress", function (e) {
+                                            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                                                return false;
+                                            }
+                                        });
+                                    })
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -76,14 +120,33 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="p-2">
-                                <form id="form-user" enctype="multipart/form-data" onsubmit="return false;">
-                                    <div class="mb-3 row">
-                                        <x-input label="Password" name="role_id"/>
+                                <form id="form-password" enctype="multipart/form-data" onsubmit="return false;">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="password-input">Password</label>
+                                        <div class="position-relative auth-pass-inputgroup input-custom-icon">
+                                            <span class="bx bx-lock-alt"></span>
+                                            <input type="password" class="form-control" name="password" id="password-input" placeholder="Tulis password">
+                                            <button type="button" class="btn btn-link position-absolute h-100 end-0 top-0" id="password-addon">
+                                                <i class="mdi mdi-eye-outline font-size-18 text-muted"></i>
+                                            </button>
+                                        </div>
                                     </div>
+                                    <input type="hidden" value="{{$user->id}}" name="id">
                                     <div class="mb-3 row">
-                                        <button type="submit" class="btn btn-primary">Simpan Profile</button>
+                                        <button type="submit" class="btn btn-primary">Simpan Password</button>
                                     </div>
                                 </form>
+                                <script>
+                                    $(document).ready(function() {
+                                        $("#form-password").submit(function(e) {
+                                            e.preventDefault();
+                                            let data = new FormData(this);
+                                            confirmModal('Apakah password sudah benar?', function() {
+                                                ajxProcess('/admin/profile/simpan-password', data, "#message-modal")
+                                            })
+                                        })
+                                    })
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -92,7 +155,7 @@
                 <div class="tab-pane" id="rekening" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
-
+                            <p>Sedang pengembangan</p>
                         </div>
                     </div>
                 </div>
@@ -104,7 +167,12 @@
                     <h5>Foto Profile</h5>
                 </div>
                 <div class="card-body">
-
+                    <div class="position-relative text-center border-bottom pb-3">
+                        <img src="{{img_url($user->photo)}}" alt="" class="avatar-xl rounded-circle img-thumbnail">
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-sm btn-primary" onclick="editData({{$user->id}}, '/admin/profile/change-photo', 'Ganti poto profile')">Ganti Foto</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,8 +182,10 @@
         $(document).ready(function() {
             var urlPencarian = "{{ url('ajax/lokasi/search') }}";
             initAjaxChoices('cari-lokasi', urlPencarian);
-
-
         })
+
+        $(document).on('change', '.jk', function() {
+            $('.jk').not(this).prop('checked', false);
+        });
     </script>
 @endsection

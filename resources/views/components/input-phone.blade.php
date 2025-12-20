@@ -7,7 +7,9 @@
     'disabled' => false,
 ])
 
-<label for="{{ $name }}" class="form-label">{{ $label }}</label>
+<label for="{{ $name }}" class="form-label">
+    {{ $label }} <span class="text-danger">*</span>
+</label>
 
 <div class="input-group" style="padding:0;">
 
@@ -16,6 +18,9 @@
     </div>
 
     <input
+        pattern="[0-9]*"
+        inputmode="numeric"
+        maxlength="12"
         type="text"
         name="{{ $name }}"
         placeholder="{{ $placeholder }}"

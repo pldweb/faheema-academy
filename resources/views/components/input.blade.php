@@ -8,7 +8,9 @@
     'id'=> ''
 ])
 
-<label for="{{ $name }}" class="form-label">{{ $label }}</label>
+<label for="{{ $name }}" class="form-label">
+    {{ $label }} <span class="text-danger">*</span>
+</label>
 
 <input
     type="{{ $type }}"

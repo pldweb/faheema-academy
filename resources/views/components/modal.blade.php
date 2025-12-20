@@ -1,9 +1,7 @@
 <div class="modal fade" id="universalModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="px-2 py-2">
-                <div id="message-modal"></div>
-            </div>
+            <div id="message-modal"></div>
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitle">Loading...</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

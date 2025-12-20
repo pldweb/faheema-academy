@@ -5,19 +5,19 @@
     <div class="navbar-brand-box">
         <a href="{{url('dashboard')}}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{asset('images/logo-dark-sm.png')}}" alt="" height="26">
+                <img src="{{logo_utama_url()}}" alt="" height="26">
             </span>
             <span class="logo-lg">
-                <img src="{{asset('images/logo-dark.png')}}" alt="" height="28">
+                <img src="{{logo_utama_url()}}" alt="" height="28">
             </span>
         </a>
 
         <a href="{{url('dashboard')}}" class="logo logo-light">
             <span class="logo-lg">
-                <img src="{{asset('images/logo-light.png')}}" alt="" height="30">
+                <img src="{{logo_utama_url()}}" alt="" height="30">
             </span>
             <span class="logo-sm">
-                <img src="{{asset('images/logo-light-sm.png')}}" alt="" height="26">
+                <img src="{{logo_utama_url()}}" alt="" height="26">
             </span>
         </a>
     </div>

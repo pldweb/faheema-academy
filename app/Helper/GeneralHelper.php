@@ -50,7 +50,7 @@ if (! function_exists('successAlert')) {
     {
         $loadData = json_encode($load);
         $elem = json_encode($elem);
-        $html = "<div class='alert alert-success'>$msg</div>";
+        $html = "<div class='alert alert-success mx-2 my-2'>$msg</div>";
         $url = json_encode($redirect);
         $script = "<script>
                 setTimeout(function () {
@@ -68,7 +68,7 @@ if (! function_exists('successAlert')) {
 if (! function_exists('errorAlert')) {
     function errorAlert($msg = null)
     {
-        return "<div class='alert alert-danger alt'>$msg</div>
+        return "<div class='alert alert-danger alt mx-2 my-2'>$msg</div>
                 <script>
                 setTimeout(function () {
                     $('.alt').fadeOut(500, function () {

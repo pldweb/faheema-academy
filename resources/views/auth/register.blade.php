@@ -91,21 +91,6 @@
             })
         })
 
-        $("#password-addon").on('click', function () {
-            let input = $("#password-input");
-            let type = input.attr('type');
-            const icon = $(this).find('i');
-
-
-            if(type == 'password'){
-                input.attr('type', 'text');
-                icon.removeClass('mdi-eye-outline').addClass('mdi-eye-off');
-            } else {
-                input.attr('type', 'password');
-                icon.removeClass('mdi-eye-off').addClass('mdi-eye-outline');
-            }
-        })
-
         $("#no_telp").on("keypress", function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 return false;
@@ -113,6 +98,5 @@
         });
 
     </script>
-
 @endsection
 

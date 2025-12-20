@@ -50,7 +50,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown-v"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{asset('images/users/avatar-3.jpg')}}"
+                    <img class="rounded-circle header-profile-user" src="{{img_url(Auth::user()->photo)}}"
                          alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-2 fw-medium font-size-15">{{Auth::user()->nama ?? ''}}</span>
                 </button>
