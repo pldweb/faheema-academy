@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+
 class QuranController extends Controller
 {
-
     public function getIndex()
     {
-        return "";
+        return '';
     }
 
     public function postSimpan()
     {
-        return "";
+        return '';
     }
-
 }

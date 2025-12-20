@@ -21,34 +21,35 @@ class ProfileController extends Controller
             'user' => $users,
             'title' => 'Pengaturan User',
         ];
+
         return view('admin.profile.index', $params);
     }
 
     public function postSimpanProfile(Request $request)
     {
         $id = $request->input('id');
-        if (!$id){
+        if (! $id) {
             return errorAlert('ID user tidak boleh kosong');
         }
 
         $email = strtolower($request->input('email'));
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return errorAlert('Email tidak valid');
         }
         $checkEmail = User::query()->where('email', $email)
-        ->where('id', '!=', $id)
-        ->first();
-        if ($checkEmail){
+            ->where('id', '!=', $id)
+            ->first();
+        if ($checkEmail) {
             return errorAlert('Email sudah terdaftar');
         }
 
         $nama = $request->input('nama');
-        if (!$nama){
+        if (! $nama) {
             return errorAlert('Nama tidak boleh kosong');
         }
 
         $no_telp = $request->input('no_telp');
-        if (!$no_telp){
+        if (! $no_telp) {
             return errorAlert('No Telp tidak boleh kosong');
         }
         $nomor_hp = WhatsAppHelper::formatNomorHp($no_telp);
@@ -58,7 +59,7 @@ class ProfileController extends Controller
         $alamat_detail = $request->input('alamat_detail');
         $tanggal_lahir = $request->input('tanggal_lahir');
         $tgl = Carbon::parse($tanggal_lahir);
-        if($tgl->greaterThan(Carbon::today())){
+        if ($tgl->greaterThan(Carbon::today())) {
             return errorAlert('Tanggal Lahir tidak bisa melebihi hari ini');
         }
 
@@ -82,8 +83,9 @@ class ProfileController extends Controller
 
             return successAlert('Berhasil simpan profile', null, null, '/admin/profile');
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
+
             return errorAlert($e->getMessage());
         }
     }
@@ -91,12 +93,12 @@ class ProfileController extends Controller
     public function postSimpanPassword(Request $request)
     {
         $id = $request->input('id');
-        if (!$id){
+        if (! $id) {
             return errorAlert('ID user tidak boleh kosong');
         }
 
         $pass = $request->input('password');
-        if(empty($pass)){
+        if (empty($pass)) {
             return errorAlert('Password tidak boleh kosong');
         }
 
@@ -111,8 +113,9 @@ class ProfileController extends Controller
 
             return successAlert('Berhasil update password', null, null, '/admin/profile');
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
+
             return errorAlert($e->getMessage());
         }
     }
@@ -120,57 +123,58 @@ class ProfileController extends Controller
     public function postChangePhoto(Request $request)
     {
         $id = $request->input('id');
-        if (!$id){
+        if (! $id) {
             return errorAlert('ID user tidak boleh kosong');
         }
         $checkId = User::find($id);
-        if (!$checkId){
+        if (! $checkId) {
             return errorAlert('ID user tidak ditemukan');
         }
         $params = [
             'user' => $checkId,
         ];
+
         return view('admin.profile.change-photo', $params);
     }
 
     public function postSimpanPhoto(Request $request)
     {
         $id = $request->input('id');
-        if (!$id){
+        if (! $id) {
             return errorAlert('ID user tidak boleh kosong');
         }
 
         $checkId = User::find($id);
-        if (!$checkId){
+        if (! $checkId) {
             return errorAlert('ID user tidak ditemukan');
         }
 
         $file = $request->file('photo');
-        if (!$file){
+        if (! $file) {
             return errorAlert('Photo tidak boleh kosong');
         }
-        if ($file->isValid()){
+        if ($file->isValid()) {
             $ext = $file->getClientOriginalExtension();
-            if (!in_array($ext, ["jpg", "png", "jpeg"])){
+            if (! in_array($ext, ['jpg', 'png', 'jpeg'])) {
                 return errorAlert('Photo tidak valid');
             }
         }
 
         DB::beginTransaction();
         try {
-            if ($checkId->photo){
+            if ($checkId->photo) {
                 Storage::disk('r2')->delete($checkId->photo);
             }
             $file = $file->store('profile', 'r2');
             $checkId->photo = $file;
             $checkId->save();
             DB::commit();
+
             return successAlert('Berhasil update photo', null, null, '/admin/profile');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
+
             return errorAlert($e->getMessage());
         }
     }
-
-
 }
