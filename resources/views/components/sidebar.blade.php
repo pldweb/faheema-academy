@@ -5,7 +5,7 @@
     <div class="navbar-brand-box">
         <a href="{{url('dashboard')}}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{logo_utama_url()}}" alt="" height="26">
+                <img src="{{favicon_url()}}" alt="" height="26">
             </span>
             <span class="logo-lg">
                 <img src="{{logo_utama_url()}}" alt="" height="28">
