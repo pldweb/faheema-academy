@@ -1,10 +1,13 @@
 <form id="form-photo" enctype="multipart/form-data" onsubmit="return false">
-    <div class="input-group">
-        <input type="file" name="photo" class="form-control" id="inputGroupFile02">
-        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+    <div class="mb-3 text-center">
+        <img id="preview-photo" src="{{img_url($user->photo)}}" style="width:130px;height:130px;object-fit:cover;border-radius:10px;margin-top:10px;">
     </div>
     <div class="mb-3">
-        <img id="preview-photo" src="{{img_url($user->photo)}}" style="width:130px;height:130px;object-fit:cover;border-radius:10px;margin-top:10px;">
+        <label for="photo">Photo (max 1mb)</label>
+        <div class="input-group">
+            <input type="file" name="photo" class="form-control" id="inputGroupFile02">
+            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        </div>
     </div>
 
     <input type="hidden" name="id" value="{{$user->id}}">
