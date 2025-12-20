@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="utf-8" />
-    <title> @yield('title') | Faheema Academy</title>
+    <title>Faheema Academy | {{$title ?? 'dashboard'}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -16,6 +16,7 @@
     <link href="{{asset('css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{asset('css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}" type="text/css">
 
     <script src="{{asset('js/jquery-3.7.1.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>

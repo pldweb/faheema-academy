@@ -10,7 +10,8 @@ class Kantor extends Model
 
     protected $fillable = [
         'nama_perusahaan',
-        'alamat',
+        'kelurahan_kode',
+        'alamat_detail',
         'email',
         'nomor_telepon',
         'nomor_handphone',

@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function mapDynamicRoutes()
     {
+        if ($this->app->routesAreCached()) {
+            return;
+        }
+
         $controllerPath = app_path('Http/Controllers');
         $namespace = 'App\Http\Controllers';
 
@@ -61,7 +65,11 @@ class AppServiceProvider extends ServiceProvider
             $className = pathinfo($file, PATHINFO_FILENAME);
 
             if (is_dir($fullPath)) {
-                $folderPrefix = Str::kebab($className).'/';
+                if ($className === 'Front') {
+                    $folderPrefix = '';
+                } else {
+                    $folderPrefix = Str::kebab($className).'/'; // Folder lain (misal Admin) tetap jadi prefix
+                }
                 $this->registerRoutesFromFolder(
                     $fullPath,
                     $namespace.'\\'.$className,
@@ -96,14 +104,13 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $isAuthController = str_contains($namespace, 'App\Http\Controllers\Auth');
-
         $isApiController = str_contains($namespace, 'App\Http\Controllers\Api');
-
+        $isFrontController = str_contains($namespace, 'App\Http\Controllers\Front');
         $isPublicController = ($controllerName === 'HomeController' || $controllerName === 'LandingController');
 
         $middlewareGroup = $isApiController ? ['api'] : ['web'];
 
-        Route::middleware($middlewareGroup)->group(function () use ($methods, $controllerClass, $prefix, $isAuthController, $isPublicController, $isApiController) {
+        Route::middleware($middlewareGroup)->group(function () use ($methods, $controllerClass, $prefix, $isAuthController, $isPublicController, $isApiController, $isFrontController) {
 
             foreach ($methods as $method) {
                 if ($method->class !== $controllerClass || $method->isConstructor()) {
@@ -125,7 +132,7 @@ class AppServiceProvider extends ServiceProvider
                     $parameters = $method->getParameters();
                     $routeParameters = $this->buildRouteParameters($parameters);
 
-                    if ($isAuthController || $isPublicController || $isApiController) {
+                    if ($isAuthController || $isPublicController || $isApiController || $isFrontController) {
 
                         $route = Route::match(
                             strtolower($httpVerb),

@@ -18,7 +18,8 @@ class User extends Authenticatable
         'email',
         'no_telp',
         'password',
-        'alamat',
+        'kelurahan_kode',
+        'alamat_detail',
         'tanggal_lahir',
         'jenis_kelamin',
         'role',
@@ -44,5 +45,10 @@ class User extends Authenticatable
     public static function panggilNamaUser()
     {
         return optional(auth()->user())->nama;
+    }
+
+    public function wilayah()
+    {
+        return $this->belongsTo(Kelurahan::class, 'kelurahan_kode', 'kode');
     }
 }

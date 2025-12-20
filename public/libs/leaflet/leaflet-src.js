@@ -2400,7 +2400,7 @@
   }
 
   // @function toFront(el: HTMLElement)
-  // Makes `el` the last child of its parent, so it renders in front of the other children.
+  // Makes `el` the last child of its parent, so it renders in Front of the other children.
   function toFront(el) {
   	var parent = el.parentNode;
   	if (parent && parent.lastChild !== el) {
@@ -9966,7 +9966,7 @@
   	},
 
   	// @method bringToFront: this
-  	// Brings this overlay in front of other overlays (in the same map pane).
+  	// Brings this overlay in Front of other overlays (in the same map pane).
   	bringToFront: function () {
   		if (this._map) {
   			toFront(this._container);
@@ -11389,7 +11389,7 @@
   	},
 
   	_setAutoZIndex: function (compare) {
-  		// go through all other layers of the same pane, set zIndex to max + 1 (front) or min - 1 (back)
+  		// go through all other layers of the same pane, set zIndex to max + 1 (Front) or min - 1 (back)
 
   		var layers = this.getPane().children,
   		    edgeZIndex = -compare(-Infinity, Infinity); // -Infinity for max, Infinity for min

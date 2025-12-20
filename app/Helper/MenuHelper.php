@@ -10,13 +10,13 @@ class MenuHelper
             [
                 'type' => 'link',
                 'label' => 'Profile',
-                'url' => url('profile'),
+                'url' => url('admin/profile'),
                 'icon' => 'mdi-account-circle',
             ],
             [
                 'type' => 'link',
                 'label' => 'Settings',
-                'url' => '#',
+                'url' => url('admin/setting'),
                 'icon' => 'mdi-cog-outline',
             ],
         ];
