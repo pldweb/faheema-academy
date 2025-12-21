@@ -87,7 +87,7 @@ class MenuHelper
                 ],
             ],
             [
-                "type" => "header",
+                'type' => 'header',
                 'label' => 'Produk Kelas',
             ],
             [
@@ -112,7 +112,7 @@ class MenuHelper
                 'active_check' => 'kantor*',
             ],
             [
-                "type" => "header",
+                'type' => 'header',
                 'label' => 'Manajemen Tim',
             ],
             [

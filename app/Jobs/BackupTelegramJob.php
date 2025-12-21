@@ -9,13 +9,7 @@ class BackupTelegramJob implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct()
-    {
+    public function __construct() {}
 
-    }
-
-    public function handle(): void
-    {
-
-    }
+    public function handle(): void {}
 }

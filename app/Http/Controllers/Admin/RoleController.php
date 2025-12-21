@@ -121,7 +121,7 @@ class RoleController extends Controller
         try {
             Artisan::call('app:sync-permissions');
             TelegramHelper::sendNotification('Permissions berhasil disinkronisasi');
-//            SendLogAktivitasHelper::sendLogAktivitas('Sinkronisasi Permissions berhasil dilakukan');
+            //            SendLogAktivitasHelper::sendLogAktivitas('Sinkronisasi Permissions berhasil dilakukan');
 
             return successAlert('Permissions berhasil disinkronisasi', '', '#message', '/admin/role');
 
