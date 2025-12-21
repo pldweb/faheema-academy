@@ -15,8 +15,8 @@ class MenuHelper
             ],
             [
                 'type' => 'link',
-                'label' => 'Settings',
-                'url' => url('admin/setting'),
+                'label' => 'Halaman Depan',
+                'url' => web_url(''),
                 'icon' => 'mdi-cog-outline',
             ],
         ];
@@ -37,6 +37,13 @@ class MenuHelper
                 'active_check' => 'dashboard*', // Pola URL buat cek aktif
             ],
             [
+                'type' => 'link',
+                'label' => 'Log Aktivitas',
+                'url' => url('admin/log-aktivitas'),
+                'icon' => 'bx bx-time-five',
+                'active_check' => 'log-aktivitas*',
+            ],
+            [
                 'type' => 'header',
                 'label' => 'Administration',
             ],
@@ -45,6 +52,20 @@ class MenuHelper
                 'label' => 'Data Kantor',
                 'url' => url('admin/kantor'),
                 'icon' => 'bx bx-building',
+                'active_check' => 'kantor*',
+            ],
+            [
+                'type' => 'link',
+                'label' => 'Hak Akses',
+                'url' => url('admin/role'),
+                'icon' => 'bx bx-lock',
+                'active_check' => 'kantor*',
+            ],
+            [
+                'type' => 'link',
+                'label' => 'Data User',
+                'url' => url('admin/user'),
+                'icon' => 'bx bx-user',
                 'active_check' => 'kantor*',
             ],
             [
@@ -64,6 +85,42 @@ class MenuHelper
                         'active_check' => 'info*',
                     ],
                 ],
+            ],
+            [
+                "type" => "header",
+                'label' => 'Produk Kelas',
+            ],
+            [
+                'type' => 'link',
+                'label' => 'Kategori Kelas',
+                'url' => url('admin/kategori-produk'),
+                'icon' => 'bx bx-layer',
+                'active_check' => 'kelas*',
+            ],
+            [
+                'type' => 'link',
+                'label' => 'Produk Kelas',
+                'url' => url('admin/produk-kelas'),
+                'icon' => 'bx bx-store-alt',
+                'active_check' => 'produk-kelas*',
+            ],
+            [
+                'type' => 'link',
+                'label' => 'Transaksi Kelas',
+                'url' => url('admin/transaksi-kelas'),
+                'icon' => 'bx bx-money',
+                'active_check' => 'kantor*',
+            ],
+            [
+                "type" => "header",
+                'label' => 'Manajemen Tim',
+            ],
+            [
+                'type' => 'link',
+                'label' => 'Laporan Kinerja',
+                'url' => url('admin/laporan-kinerja'),
+                'icon' => 'bx bxs-report',
+                'active_check' => 'kantor*',
             ],
         ];
     }

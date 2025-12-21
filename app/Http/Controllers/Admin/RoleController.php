@@ -2,88 +2,131 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\TelegramHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Kantor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    private function handleUpload($request, $inputName)
-    {
-        if ($request->hasFile($inputName)) {
-            return $request->file($inputName)->store('kantor', 'r2');
-        }
-
-        return null;
-    }
-
     public function getIndex()
     {
-        $kantors = Kantor::query()->first() ?? new Kantor;
-        $params = ['kantor' => $kantors];
+        $params = [
+            'data' => Role::withCount('permissions')->orderBy('id', 'DESC')->paginate(10),
+            'title' => 'List Data Role',
+            'subtitle' => 'Manajemen Hak Akses User',
+        ];
 
-        return view('admin.kantor.index', $params);
+        return view('admin.role.index', $params);
     }
 
-    public function postSimpan(Request $request)
+    public function postLoadData()
     {
+        $data = Role::withCount('permissions')->orderBy('id', 'DESC')->paginate(10);
 
-        $kantor = Kantor::find($request->id) ?? new Kantor;
+        return view('admin.role.data', ['data' => $data]);
+    }
+
+    public function getShowCreate()
+    {
+        // Ambil permission & Kelompokkan berdasarkan prefix (user.create -> user)
+        $permissions = Permission::all()->groupBy(function ($perm) {
+            return explode('.', $perm->name)[0];
+        });
+
+        return view('admin.role.create', compact('permissions'));
+    }
+
+    public function postEditData(Request $request)
+    {
+        $id = $request->input('id');
+        $role = Role::findById($id);
+
+        if (! $role) {
+            return errorAlert('Data tidak ditemukan');
+        }
+
+        // Ambil permission & Grouping
+        $permissions = Permission::all()->groupBy(function ($perm) {
+            return explode('.', $perm->name)[0];
+        });
+
+        // Ambil permission yang SUDAH DIMILIKI role ini (untuk auto-checked)
+        $rolePermissions = $role->permissions->pluck('name')->toArray();
+
+        return view('admin.role.edit', compact('role', 'permissions', 'rolePermissions'));
+    }
+
+    public function postSimpanData(Request $request)
+    {
+        $id = $request->input('id');
+        $name = $request->input('name');
+
+        if (empty($name)) {
+            return errorAlert('Nama Role wajib diisi');
+        }
 
         DB::beginTransaction();
         try {
-            $newLogo = self::handleUpload($request, 'logo');
-            $newFavicon = self::handleUpload($request, 'favicon');
-            $newLogoInvert = self::handleUpload($request, 'logo_invert');
-            $kantor->nama_perusahaan = $request->nama_perusahaan;
-            $kantor->kelurahan_kode = $request->kode_lokasi;
-            $kantor->alamat_detail = $request->alamat_detail;
-            $kantor->kode_pos = $request->kode_pos;
-            $kantor->email = $request->email;
-            $kantor->tagline = $request->tagline;
-            $kantor->nomor_telepon = $request->nomor_telepon;
-            $kantor->nomor_handphone = $request->nomor_handphone;
-            $kantor->latitude = $request->latitude;
-            $kantor->longitude = $request->longitude;
-            if ($newLogo) {
-                if ($kantor->logo) {
-                    Storage::disk('r2')->delete($kantor->logo);
-                }
-                $kantor->logo = $newLogo;
+            $role = Role::updateOrCreate(
+                ['id' => $id],
+                ['name' => $name, 'guard_name' => 'web']
+            );
+
+            // Sync Permission (Fitur Spatie)
+            // Ini otomatis menghapus yang lama dan memasukkan yang baru dicentang
+            if (strtolower($request->name) === 'administrator') {
+                $role->syncPermissions(Permission::all());
+            } else {
+                // Kalau bukan admin, sesuai checkbox
+                $permissions = $request->input('permissions') ?? [];
+                $role->syncPermissions($permissions);
             }
 
-            if ($newFavicon) {
-                if ($kantor->favicon) {
-                    Storage::disk('r2')->delete($kantor->favicon);
-                }
-                $kantor->favicon = $newFavicon;
-            }
-
-            if ($newLogoInvert) {
-                if ($kantor->logo_invert) {
-                    Storage::disk('r2')->delete($kantor->logo_invert);
-                }
-                $kantor->logo_invert = $newLogoInvert;
-            }
-            $kantor->save();
             DB::commit();
 
-            $redirectUrl = url('/admin/kantor');
-
-            return successAlert('Data kantor berhasil disimpan!', null, null, $redirectUrl);
+            return successAlert('Role berhasil disimpan', '/admin/role/load-data');
 
         } catch (\Exception $e) {
-            DB::rollback();
-            if (isset($newLogo)) {
-                Storage::disk('r2')->delete($newLogo);
-            }
-            if (isset($newFavicon)) {
-                Storage::disk('r2')->delete($newFavicon);
-            }
+            DB::rollBack();
 
-            return errorAlert('Gagal menyimpan data: '.$e->getMessage());
+            return errorAlert('Gagal menyimpan: '.$e->getMessage());
+        }
+    }
+
+    public function postDeleteData(Request $request)
+    {
+        $id = $request->input('id');
+        $role = Role::find($id);
+
+        if (! $role) {
+            return errorAlert('Role tidak ditemukan');
+        }
+
+        // Proteksi Role Dewa
+        if ($role->name === 'administrator' || $role->name === 'super-admin') {
+            return errorAlert('Role Administrator tidak boleh dihapus!');
+        }
+
+        $role->delete();
+
+        return successAlert('Role berhasil dihapus', '', null, '/admin/role/load-data');
+    }
+
+    public function postSyncPermissions()
+    {
+        try {
+            Artisan::call('app:sync-permissions');
+            TelegramHelper::sendNotification('Permissions berhasil disinkronisasi');
+//            SendLogAktivitasHelper::sendLogAktivitas('Sinkronisasi Permissions berhasil dilakukan');
+
+            return successAlert('Permissions berhasil disinkronisasi', '', '#message', '/admin/role');
+
+        } catch (\Exception $e) {
+            return errorAlert('Gagal sinkronisasi: '.$e->getMessage());
         }
     }
 }

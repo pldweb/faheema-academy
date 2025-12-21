@@ -8,7 +8,7 @@
                 <img src="{{favicon_url()}}" alt="" height="26">
             </span>
             <span class="logo-lg">
-                <img src="{{logo_utama_url()}}" alt="" height="28">
+                <img src="{{logo_utama_url()}}" alt="" height="40">
             </span>
         </a>
 

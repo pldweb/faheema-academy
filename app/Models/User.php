@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Kelurahan::class, 'kelurahan_kode', 'kode');
     }
+
+    public function getRoleName()
+    {
+        return $this->getRoleNames()->first() ?? '-';
+    }
 }

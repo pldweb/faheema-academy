@@ -1,3 +1,20 @@
+:root {
+    --primary-color: #2058C7;
+}
+
 .mb-3.row .choices {
     padding: 0;
+}
+
+#sidebar-menu ul li a {
+    margin-bottom: 5px;
+}
+
+#sidebar-menu ul li a:hover {
+    background-color: #f1f3f4;
+}
+
+#sidebar-menu ul li.mm-active>a {
+    background-color: var(--primary-color);
+    color: white;
 }

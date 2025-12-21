@@ -169,3 +169,17 @@ if (! function_exists('nama_perusahaan')) {
         return 'Company';
     }
 }
+
+if (! function_exists('web_url')) {
+    function web_url($path = null)
+    {
+        // 1. Bersihkan slash di awal path biar rapi (cegah double slash //)
+        // Misal input: '/quran' -> jadi 'quran'
+        $cleanPath = $path ? ltrim($path, '/') : '';
+        if (app()->environment('production')) {
+            return secure_url($cleanPath);
+        }
+
+        return url($cleanPath);
+    }
+}
