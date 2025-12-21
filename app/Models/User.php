@@ -57,4 +57,18 @@ class User extends Authenticatable
     {
         return $this->getRoleNames()->first() ?? '-';
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'user_id');
+    }
+
+    public function punyaKelas($kelasId)
+    {
+        return $this->transaksi()
+            ->where('tipe_produk', 'kelas')
+            ->where('kelas_id', $kelasId)
+            ->where('status_pembayaran', 'lunas')
+            ->exists();
+    }
 }
